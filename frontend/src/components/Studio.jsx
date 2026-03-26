@@ -12,16 +12,8 @@ export default function Studio({ clips, jobId }) {
 
     const handleDownload = async (url, title) => {
         try {
-            const res = await fetch(url);
-            const blob = await res.blob();
-            const blobUrl = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = blobUrl;
-            a.download = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.mp4`;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(blobUrl);
+            const filename = url.split('/').pop();
+            window.location.href = `http://localhost:8000/api/download_file/${filename}`;
         } catch (e) {
             console.error('Download failed', e);
         }

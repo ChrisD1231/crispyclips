@@ -1,9 +1,8 @@
 Write-Host "Starting Crispy Clips Backend..." -ForegroundColor Green
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd backend; .\venv\Scripts\Activate.ps1; python main.py"
-
+Start-Process powershell -ArgumentList "-ExecutionPolicy", "Bypass", "-NoExit", "-Command", "cd backend; .\venv\Scripts\python main.py"
 
 Write-Host "Starting Crispy Clips Frontend..." -ForegroundColor Green
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd frontend; npm run dev"
+Start-Process powershell -ArgumentList "-ExecutionPolicy", "Bypass", "-NoExit", "-Command", "cd frontend; npm run dev"
 
 Write-Host "===============================================" -ForegroundColor Cyan
 Write-Host "App is starting up!" -ForegroundColor Cyan

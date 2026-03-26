@@ -123,6 +123,15 @@ async def download_raw_endpoint(req: RawRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+from fastapi.responses import FileResponse
+
+@app.get("/api/download_file/{filename}")
+async def serve_download(filename: str):
+    file_path = os.path.join("downloads", filename)
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="File not found")
+    return FileResponse(path=file_path, filename=filename, media_type='application/octet-stream')
+
 class RerenderRequest(BaseModel):
     job_id: str
     clip_index: int

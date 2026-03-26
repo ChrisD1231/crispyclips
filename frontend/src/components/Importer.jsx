@@ -20,17 +20,9 @@ export default function Importer({ onStart }) {
       });
       const data = await res.json();
       if (data.success) {
-        // Trigger download via Blob
-        const fileRes = await fetch(data.url);
-        const blob = await fileRes.blob();
-        const blobUrl = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = blobUrl;
-        a.download = `${data.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.mp4`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(blobUrl);
+        // Use the dedicated backend download router to avoid static files CORS issues
+        const filename = data.url.split('/').pop();
+        window.location.href = `http://localhost:8000/api/download_file/${filename}`;
       } else {
         alert('Download failed server-side');
       }
